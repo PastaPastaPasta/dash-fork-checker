@@ -12,44 +12,28 @@ def main(tried):
     cmd_trezor4 = "curl -s https://dash4.trezor.io/blocks | grep -oP '(?<=<td class=\"ellipsis\">).*?(?=</td>)' | head -1 | xargs -I{} echo \"{}\" | jq ."
     cmd_trezor5 = "curl -s https://dash5.trezor.io/blocks | grep -oP '(?<=<td class=\"ellipsis\">).*?(?=</td>)' | head -1 | xargs -I{} echo \"{}\" | jq ."
 
-    dashevo_insight = get_block_hash(cmd_dashevo_insight)
-    blockchair = get_block_hash(cmd_blockchair)
-    chainz = get_block_hash(cmd_chainz) 
-    blockcypher = get_block_hash(cmd_blockcypher) 
-    trezor1 = get_block_hash(cmd_trezor1)
-    trezor2 = get_block_hash(cmd_trezor2)
-    trezor3 = get_block_hash(cmd_trezor3)
-    trezor4 = get_block_hash(cmd_trezor4)
-    trezor5 = get_block_hash(cmd_trezor5)
+    data["dashevo_insight"] = get_block_hash(cmd_dashevo_insight)
+    data["blockchair"] =      get_block_hash(cmd_blockchair)
+    data["chainz"] =          get_block_hash(cmd_chainz) 
+    data["blockcypher"] =     get_block_hash(cmd_blockcypher) 
+    data["trezor1"] =         get_block_hash(cmd_trezor1)
+    data["trezor2"] =         get_block_hash(cmd_trezor2)
+    data["trezor3"] =         get_block_hash(cmd_trezor3)
+    data["trezor4"] =         get_block_hash(cmd_trezor4)
+    data["trezor5"] =         get_block_hash(cmd_trezor5)
 
     # Sleep this many seconds to attempt to ensure one explorer isn't just behind
     wait_time = 30
 
-    if not dashevo_insight == blockchair:
-        if tried:
-            send_notification("Dashevo insights latest block hash (" + dashevo_insight + ") does not equal blockchairs latest hash (" + blockchair + ")")
-            return
-        else: 
-            time.sleep(wait_time)
-            main(True)
-            return
-    if not blockchair == chainz:
-        if tried:
-            send_notification("Blockchairs latest block hash (" + blockchair + ") does not equal Chainzs latest hash (" + chainz + ")")
-            return
-        else: 
-            time.sleep(wait_time)
-            main(True)
-            return
-    if not chainz == blockcypher:
-        if tried:
-            send_notification("Chainzs latest block hash (" + chainz + ") does not equal blockcyphers latest hash (" + blockcypher + ")")
-            return
-        else: 
-            time.sleep(wait_time)
-            main(True)
-            return
+    text = ""
+    for explorer in data:
+        for explorer2 in data:
+            if not data[explorer] == data[explorer2]:
+                 text = text + explorer + " (" + data[explorer] + ") does not equal " + explorer2 + data[explorer2] + " (" + data[explorer2] + ") \n"
 
+    if not text == "":
+        send_notification(text)
+ 
 def get_block_hash(cmd):
     os.popen(cmd).read().rstrip().strip('\"')
 
