@@ -12,23 +12,26 @@ def main(tried):
     chainz = os.popen(cmd_chainz).read().rstrip().strip('\"') 
     blockcypher = os.popen(cmd_blockcypher).read().rstrip().strip('\"') 
 
+    # Sleep this many seconds to attempt to ensure one explorer isn't just behind
+    wait_time = 30
+
     if not dashevo_insight == blockchair:
         if tried:
             send_notification("Dashevo insights latest block hash (" + dashevo_insight + ") does not equal blockchairs latest hash (" + blockchair + ")")
         else: 
-            time.sleep(20)
+            time.sleep(wait_time)
             main(True)
     if not blockchair == chainz:
         if tried:
             send_notification("Blockchairs latest block hash (" + blockchair + ") does not equal Chainzs latest hash (" + chainz + ")")
         else: 
-            time.sleep(20)
+            time.sleep(wait_time)
             main(True)
 #    if not chainz == blockcypher:
 #        if tried:
 #            send_notification("Chainzs latest block hash (" + chainz + ") does not equal blockcyphers latest hash (" + blockcypher + ")")
 #        else: 
-#            time.sleep(20)
+#            time.sleep(wait_time)
 #            main(True)
 
 # Sends a slack notification with the webhook being in secret.txt
