@@ -47,6 +47,7 @@ def send_notification(text):
         secret = secret_file.read()
 
     os.popen("curl -X POST -H 'Content-type: application/json' --data '{\"text\":\" " + text + " \"}' " + secret)
+    print(text)
 
 if __name__ == "__main__":
     main(False)
