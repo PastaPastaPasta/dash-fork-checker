@@ -6,11 +6,11 @@ def main(tried):
     cmd_blockchair = "curl -s https://api.blockchair.com/dash/stats | jq '.data.best_block_hash' ;"
     cmd_chainz = "curl -s https://chainz.cryptoid.info/dash/api.dws?q=getblockcount | xargs -I{} echo {}+1 | bc | xargs -I{} curl -s 'https://chainz.cryptoid.info/dash/api.dws?q=getblockhash&height={}' | jq ."
     cmd_blockcypher = "curl -s https://api.blockcypher.com/v1/dash/main | jq .hash"
-    cmd_trezor1 = "curl -s https://dash1.trezor.io/blocks | grep -oP '(?<=<td class="ellipsis">).*?(?=</td>)' | head -1 | xargs -I{} echo \"{}\" | jq ."
-    cmd_trezor2 = "curl -s https://dash2.trezor.io/blocks | grep -oP '(?<=<td class="ellipsis">).*?(?=</td>)' | head -1 | xargs -I{} echo \"{}\" | jq ."
-    cmd_trezor3 = "curl -s https://dash3.trezor.io/blocks | grep -oP '(?<=<td class="ellipsis">).*?(?=</td>)' | head -1 | xargs -I{} echo \"{}\" | jq ."
-    cmd_trezor4 = "curl -s https://dash4.trezor.io/blocks | grep -oP '(?<=<td class="ellipsis">).*?(?=</td>)' | head -1 | xargs -I{} echo \"{}\" | jq ."
-    cmd_trezor5 = "curl -s https://dash5.trezor.io/blocks | grep -oP '(?<=<td class="ellipsis">).*?(?=</td>)' | head -1 | xargs -I{} echo \"{}\" | jq ."
+    cmd_trezor1 = "curl -s https://dash1.trezor.io/blocks | grep -oP '(?<=<td class=\"ellipsis\">).*?(?=</td>)' | head -1 | xargs -I{} echo \"{}\" | jq ."
+    cmd_trezor2 = "curl -s https://dash2.trezor.io/blocks | grep -oP '(?<=<td class=\"ellipsis\">).*?(?=</td>)' | head -1 | xargs -I{} echo \"{}\" | jq ."
+    cmd_trezor3 = "curl -s https://dash3.trezor.io/blocks | grep -oP '(?<=<td class=\"ellipsis\">).*?(?=</td>)' | head -1 | xargs -I{} echo \"{}\" | jq ."
+    cmd_trezor4 = "curl -s https://dash4.trezor.io/blocks | grep -oP '(?<=<td class=\"ellipsis\">).*?(?=</td>)' | head -1 | xargs -I{} echo \"{}\" | jq ."
+    cmd_trezor5 = "curl -s https://dash5.trezor.io/blocks | grep -oP '(?<=<td class=\"ellipsis\">).*?(?=</td>)' | head -1 | xargs -I{} echo \"{}\" | jq ."
 
     dashevo_insight = get_block_hash(cmd_dashevo_insight)
     blockchair = get_block_hash(cmd_blockchair)
