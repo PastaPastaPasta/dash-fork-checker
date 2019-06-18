@@ -13,27 +13,18 @@ def main(tried):
     cmd_trezor5 = "curl -s https://dash5.trezor.io/blocks | grep -oP '(?<=<td class=\"ellipsis\">).*?(?=</td>)' | head -1 | xargs -I{} echo \\\"{}\\\" | jq . ;"
 
     data = []
-    print("dashevo")
     data.append(["dashevo_insight", get_block_hash(cmd_dashevo_insight)])
-    print("blockchair")
     data.append(["blockchair", get_block_hash(cmd_blockchair)])
-    print("chainz")
     data.append(["chainz", get_block_hash(cmd_chainz)]) 
-    print("blockc")
     data.append(["blockcypher", get_block_hash(cmd_blockcypher)]) 
-    print("t1")
     data.append(["trezor1", get_block_hash(cmd_trezor1)])
-    print("t2")
     data.append(["trezor2", get_block_hash(cmd_trezor2)])
-    print("t3")
     data.append(["trezor3", get_block_hash(cmd_trezor3)])
-    print("t4")
     data.append(["trezor4", get_block_hash(cmd_trezor4)])
-    print("t5")
     data.append(["trezor5", get_block_hash(cmd_trezor5)])
 
     # Sleep this many seconds to attempt to ensure one explorer isn't just behind
-    wait_time = 30
+    wait_time = 10
 
     text = ""
     for index in range(0, len(data) - 1):
@@ -49,8 +40,6 @@ def get_block_hash(cmd):
 
 # Sends a slack notification with the webhook being in secret.txt
 def send_notification(text):
-    print(text)
-    return
     secret_file = open("secret.txt", "r")
     if secret_file.mode == 'r':
         secret = secret_file.read()
