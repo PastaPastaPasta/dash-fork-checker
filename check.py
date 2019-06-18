@@ -7,10 +7,10 @@ def main(tried):
     cmd_chainz = "curl -s https://chainz.cryptoid.info/dash/api.dws?q=getblockcount | xargs -I{} echo {}+1 | bc | xargs -I{} curl -s 'https://chainz.cryptoid.info/dash/api.dws?q=getblockhash&height={}' | jq ."
     cmd_blockcypher = "curl -s https://api.blockcypher.com/v1/dash/main | jq .hash"
 
-    dashevo_insight = os.popen(cmd_dashevo_insight).read().rstrip().strip('\"')
-    blockchair = os.popen(cmd_blockchair).read().rstrip().strip('\"')
-    chainz = os.popen(cmd_chainz).read().rstrip().strip('\"') 
-    blockcypher = os.popen(cmd_blockcypher).read().rstrip().strip('\"') 
+    dashevo_insight = get_block_hash(cmd_dashevo_insight)
+    blockchair = get_block_hash(cmd_blockchair)
+    chainz = get_block_hash(cmd_chainz) 
+    blockcypher = get_block_hash(cmd_blockcypher) 
 
     # Sleep this many seconds to attempt to ensure one explorer isn't just behind
     wait_time = 30
@@ -39,6 +39,9 @@ def main(tried):
             time.sleep(wait_time)
             main(True)
             return
+
+def get_block_hash(cmd):
+    os.popen(cmd).read().rstrip().strip('\"')
 
 # Sends a slack notification with the webhook being in secret.txt
 def send_notification(text):
