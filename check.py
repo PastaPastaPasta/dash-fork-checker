@@ -16,7 +16,8 @@ def main(tried):
     data["dashevo_insight"] = get_block_hash(cmd_dashevo_insight)
     data["blockchair"] = get_block_hash(cmd_blockchair)
     data["chainz"] = get_block_hash(cmd_chainz)
-    data["blockcypher"] = get_block_hash(cmd_blockcypher)
+#    data["blockcypher"] = get_block_hash(cmd_blockcypher)
+    blockcypher = get_block_hash(cmd_blockcypher)
     data["trezor1"] = get_block_hash(cmd_trezor1)
     data["trezor2"] = get_block_hash(cmd_trezor2)
     data["trezor3"] = get_block_hash(cmd_trezor3)
@@ -38,6 +39,9 @@ def main(tried):
 
         for item in new_dict.items():
             text = text + 'Hash: {} found on Explorer(s): {}\n'.format(item[0], ', '.join(item[1]))
+
+    if blockcypher == data["dashevo_insight"]:
+        text = text + 'Blockcypher (' + blockcypher + ')  appears up to date with dashevo (' + data["dashevo_insight"] + ')'
 
     if not text == "":
         send_notification(text)
