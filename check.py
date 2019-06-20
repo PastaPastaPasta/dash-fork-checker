@@ -32,13 +32,13 @@ def main(tried):
     uniqueValues = set(data.values())
     
     if len(uniqueValues) > 1:
-        text = "Possible fork! Explorers reporting different best block hashes.\n"
+        text = "Possible fork! Explorers reporting {} different best block hashes.\n".format(len(uniqueValues))
         new_dict = {}
         for k, v in data.items():
             new_dict.setdefault(v, []).append(k)
 
         for item in new_dict.items():
-            text = text + 'Hash: {} found on Explorer(s): {}\n'.format(item[0], ', '.join(item[1]))
+            text = text + 'Hash: `{}` found on Explorer(s): {}\n'.format(item[0], ', '.join(item[1]))
 
     if blockcypher == data["dashevo_insight"]:
         text = text + 'Blockcypher (' + blockcypher + ')  appears up to date with dashevo (' + data["dashevo_insight"] + ')'
