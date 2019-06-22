@@ -31,7 +31,7 @@ def main(tried):
     #block_hash["blockcypher"] = blockcypher_data['hash']
     blockcypher = blockcypher_data['hash']
 
-    block_height["chainz"] = requests.get(url_chainz_height).json()
+    block_height["chainz"] = requests.get(url_chainz_height).json() + 1
     block_hash["chainz"] = requests.get('{}{}'.format(url_chainz_hash, block_height["chainz"])).json()
 
     # Get data for trezor servers 1-5
