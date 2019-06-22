@@ -76,8 +76,8 @@ def main(tried):
         for item in new_dict_height.items():
             text = text + 'Hash: {} found on Explorer(s): {}\n'.format(item[0], ', '.join(item[1]))
 
-    if blockcypher == block_hash["dashevo_insight"]:
-        text = text + 'Blockcypher (' + blockcypher + ')  appears up to date with dashevo (' + block_hash["dashevo_insight"] + ')'
+    if block_hash["blockcypher"] == block_hash["dashevo_insight"]:
+        text = text + 'Blockcypher (' + block_hash["blockcypher"] + ')  appears up to date with dashevo (' + block_hash["dashevo_insight"] + ')'
 
     if not text == "":
         if tried:
