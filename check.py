@@ -47,7 +47,7 @@ def main(tried):
         block_hash[trezor_name] = tr_elements[1][1].text_content()
 
     # Sleep this many seconds to attempt to ensure one explorer isn't just behind
-    wait_time = 10
+    wait_time = 30
 
     text = ""
 
