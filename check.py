@@ -27,9 +27,9 @@ def main(tried):
     block_hash["blockchair"] = blockchair_data['data']['best_block_hash']
 
     blockcypher_data = requests.get(url_blockcypher).json()
-    #block_height["blockcypher"] = blockcypher_data['height']
-    #block_hash["blockcypher"] = blockcypher_data['hash']
-    blockcypher = blockcypher_data['hash']
+    block_height["blockcypher"] = blockcypher_data['height']
+    block_hash["blockcypher"] = blockcypher_data['hash']
+    #blockcypher = blockcypher_data['hash']
 
     block_height["chainz"] = requests.get(url_chainz_height).json()
     block_hash["chainz"] = requests.get('{}{}'.format(url_chainz_hash, block_height["chainz"])).json()
