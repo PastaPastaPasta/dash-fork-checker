@@ -1,6 +1,7 @@
 import os
 import time
 
+
 def main(tried):
     cmd_dashevo_insight = "curl -s https://insight.dashevo.org/insight-api/status?q=getBestBlockHash | jq .bestblockhash ;"
     cmd_blockchair = "curl -s https://api.blockchair.com/dash/stats | jq '.data.best_block_hash' ;"
@@ -33,8 +34,12 @@ def main(tried):
             text = text + data[index][0] + " (" + data[index][1] + ") does not equal " + data[index+1][0] + " (" + data[index+1][1] + ") \n"
 
     if not text == "":
-        send_notification(text)
- 
+        if tried:
+            send_notification(text)
+        else: 
+            time.sleep(wait_time)
+            main(True)
+
 def get_block_hash(cmd):
     return os.popen(cmd).read().rstrip().strip('\"')
 
