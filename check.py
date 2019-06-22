@@ -74,7 +74,7 @@ def main(tried):
             new_dict_height.setdefault(v, []).append(k)
 
         for item in new_dict_height.items():
-            text = text + 'Hash: {} found on Explorer(s): {}\n'.format(item[0], ', '.join(item[1]))
+            text = text + 'Height: {} found on Explorer(s): {}\n'.format(item[0], ', '.join(item[1]))
 
     if block_hash["blockcypher"] == block_hash["dashevo_insight"]:
         text = text + 'Blockcypher (' + block_hash["blockcypher"] + ')  appears up to date with dashevo (' + block_hash["dashevo_insight"] + ')'
