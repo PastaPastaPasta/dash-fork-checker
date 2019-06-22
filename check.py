@@ -56,7 +56,7 @@ def main(tried):
 
     if len(uniqueValuesHash) > 1:
         if len(uniqueValuesHeight) > 1:
-            text = "[Unlikely] Possible fork! Explorers reporting different best block hashes and block heights.\n"
+            text = "Possible fork! Explorers reporting different best block hashes and block heights.\n"
         if len(uniqueValuesHeight) == 1:
             text = "POSSIBLE FORK ALERT: Explorers reporting different best block hashes at the same height!!!"
 
