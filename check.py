@@ -84,6 +84,7 @@ def main(tried):
             send_notification(text)
         else: 
             time.sleep(wait_time)
+            print("Sleeping...")
             main(True)
 
 # Sends a slack notification with the webhook being in secret.txt
