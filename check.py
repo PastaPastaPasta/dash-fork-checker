@@ -13,25 +13,36 @@ def main(tried):
     cmd_trezor4 = "curl -s https://dash4.trezor.io/blocks | grep -oP '(?<=<td class=\"ellipsis\">).*?(?=</td>)' | head -1 | xargs -I{} echo \\\"{}\\\" | jq . ;"
     cmd_trezor5 = "curl -s https://dash5.trezor.io/blocks | grep -oP '(?<=<td class=\"ellipsis\">).*?(?=</td>)' | head -1 | xargs -I{} echo \\\"{}\\\" | jq . ;"
 
-    data = []
-    data.append(["dashevo_insight", get_block_hash(cmd_dashevo_insight)])
-    data.append(["blockchair", get_block_hash(cmd_blockchair)])
-    data.append(["chainz", get_block_hash(cmd_chainz)]) 
-    data.append(["blockcypher", get_block_hash(cmd_blockcypher)]) 
-    data.append(["trezor1", get_block_hash(cmd_trezor1)])
-    data.append(["trezor2", get_block_hash(cmd_trezor2)])
-    data.append(["trezor3", get_block_hash(cmd_trezor3)])
-    data.append(["trezor4", get_block_hash(cmd_trezor4)])
-    data.append(["trezor5", get_block_hash(cmd_trezor5)])
+    data = {}
+    data["dashevo_insight"] = get_block_hash(cmd_dashevo_insight)
+    data["blockchair"] = get_block_hash(cmd_blockchair)
+    data["chainz"] = get_block_hash(cmd_chainz)
+#    data["blockcypher"] = get_block_hash(cmd_blockcypher)
+    blockcypher = get_block_hash(cmd_blockcypher)
+    data["trezor1"] = get_block_hash(cmd_trezor1)
+    data["trezor2"] = get_block_hash(cmd_trezor2)
+    data["trezor3"] = get_block_hash(cmd_trezor3)
+    data["trezor4"] = get_block_hash(cmd_trezor4)
+    data["trezor5"] = get_block_hash(cmd_trezor5)
 
     # Sleep this many seconds to attempt to ensure one explorer isn't just behind
     wait_time = 10
 
     text = ""
-    for index in range(0, len(data) - 1):
 
-        if not data[index][1] == data[index+1][1]:
-            text = text + data[index][0] + " (" + data[index][1] + ") does not equal " + data[index+1][0] + " (" + data[index+1][1] + ") \n"
+    uniqueValues = set(data.values())
+    
+    if len(uniqueValues) > 1:
+        text = "Possible fork! Explorers reporting different best block hashes.\n"
+        new_dict = {}
+        for k, v in data.items():
+            new_dict.setdefault(v, []).append(k)
+
+        for item in new_dict.items():
+            text = text + 'Hash: {} found on Explorer(s): {}\n'.format(item[0], ', '.join(item[1]))
+
+    if blockcypher == data["dashevo_insight"]:
+        text = text + 'Blockcypher (' + blockcypher + ')  appears up to date with dashevo (' + data["dashevo_insight"] + ')'
 
     if not text == "":
         if tried:
