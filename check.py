@@ -47,7 +47,7 @@ def main(tried):
         block_hash[trezor_name] = tr_elements[1][1].text_content()
 
     # Sleep this many seconds to attempt to ensure one explorer isn't just behind
-    wait_time = 30
+    wait_time = 60
 
     text = ""
 
@@ -80,12 +80,12 @@ def main(tried):
         text = text + 'Blockcypher (' + blockcypher + ')  appears up to date with dashevo (' + block_hash["dashevo_insight"] + ')'
 
     if not text == "":
-        if tried:
+        if tried>5:
             send_notification(text)
         else: 
             time.sleep(wait_time)
             print("Sleeping...")
-            main(True)
+            main(tried + 1)
 
 # Sends a slack notification with the webhook being in secret.txt
 def send_notification(text):
@@ -97,4 +97,4 @@ def send_notification(text):
     print(text)
 
 if __name__ == "__main__":
-    main(False)
+    main(0)
