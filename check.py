@@ -27,9 +27,8 @@ def main(tried):
     block_hash["blockchair"] = blockchair_data['data']['best_block_hash']
 
     blockcypher_data = requests.get(url_blockcypher).json()
-    #block_height["blockcypher"] = blockcypher_data['height']
-    #block_hash["blockcypher"] = blockcypher_data['hash']
-    blockcypher = blockcypher_data['hash']
+    block_height["blockcypher"] = blockcypher_data['height']
+    block_hash["blockcypher"] = blockcypher_data['hash']
 
     block_height["chainz"] = requests.get(url_chainz_height).json() + 1
     block_hash["chainz"] = requests.get('{}{}'.format(url_chainz_hash, block_height["chainz"])).json()
@@ -75,9 +74,6 @@ def main(tried):
 
         for item in new_dict_height.items():
             text = text + 'Height: {} found on Explorer(s): {}\n'.format(item[0], ', '.join(item[1]))
-
-    if blockcypher == block_hash["dashevo_insight"]:
-        text = text + 'Blockcypher (' + blockcypher + ')  appears up to date with dashevo (' + block_hash["dashevo_insight"] + ')'
 
     if not text == "":
         if tried>5:
